@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DumpingBufferComponent
 {
-    public class DumpingProperty
+    class DumpingProperty
     {
         private string code;
         private int dumpingValue;
@@ -16,9 +16,11 @@ namespace DumpingBufferComponent
             this.Code = code;
             this.DumpingValue = dumpingValue;
         }
+
         public DumpingProperty() { }
 
         public string Code { get => code; set => code = value; }
         public int DumpingValue { get => dumpingValue; set => dumpingValue = value; }
+
     }
 }

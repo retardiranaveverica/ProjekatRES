@@ -8,7 +8,6 @@ namespace DumpingBufferComponent
 {
     public class DumpingPropertyCollection
     {
-
         private List<DumpingProperty> dumpingProperties = new List<DumpingProperty>();
 
         public DumpingPropertyCollection()
@@ -16,7 +15,6 @@ namespace DumpingBufferComponent
         }
 
         public List<DumpingProperty> DumpingProperties { get => dumpingProperties; set => dumpingProperties = value; }
-
 
     }
 }

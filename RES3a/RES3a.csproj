@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DumpingBuffer\DumpingBuffer.csproj">
-      <Project>{66238638-6bad-40b5-bc07-06c2219f04b5}</Project>
-      <Name>DumpingBuffer</Name>
+    <ProjectReference Include="..\DumpingBuffer\DumpingBufferComponent.csproj">
+      <Project>{66238638-6BAD-40B5-BC07-06C2219F04B5}</Project>
+      <Name>DumpingBufferComponent</Name>
     </ProjectReference>
     <ProjectReference Include="..\HistoricalComponent\HistoricalComponent.csproj">
       <Project>{5650BF83-BF2C-405A-BA2C-2DDC42E17DFC}</Project>
