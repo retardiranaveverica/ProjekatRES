@@ -23,16 +23,17 @@ namespace RES3a
                 Console.WriteLine("2. Slanje direktno na Historical");
 
                 int broj = Int32.Parse(Console.ReadLine());
-                database.Create();
+               // database.Create();
                 switch (broj)
                 {
 
                     case 1:
                         writerToDumpingBaffer.SetDataToDumpingBuffer();
-                        database.WriteToDatabase();
+                       // database.WriteToDatabase();
                         break;
                     case 2:
                         writerToHistorical.SettingValues();
+                        database.WriteToDatabase();
                         break;
                     default:
                         Console.WriteLine("Izaberite opciju 1 ili 2!");
