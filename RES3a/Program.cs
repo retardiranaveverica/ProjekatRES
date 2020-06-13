@@ -14,8 +14,8 @@ namespace RES3a
         {
             WriterToHistorical writerToHistorical = new WriterToHistorical();
             WriterToDumpingBaffer writerToDumpingBaffer = new WriterToDumpingBaffer();
-      //      Database database = new Database();
-
+            Database database = new Database();
+            DataFromDB data = new DataFromDB();
             while (true)
             {
                 Console.WriteLine("Odaberite 1 ili 2");
@@ -29,10 +29,12 @@ namespace RES3a
 
                     case 1:
                         writerToDumpingBaffer.SetDataToDumpingBuffer();
-          //              database.WriteToDatabase();
+                       // data.PackAddData();
+                        database.WriteToDatabase();
                         break;
                     case 2:
                         writerToHistorical.SettingValues();
+                        database.WriteToDatabase();
                         break;
                     default:
                         Console.WriteLine("Izaberite opciju 1 ili 2!");

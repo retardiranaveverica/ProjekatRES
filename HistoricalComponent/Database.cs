@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,14 +29,11 @@ namespace HistoricalComponent
         }
         public struct UpdateData
         {
-            public string code;
-            public int id;
+            public bool ima;
             public int value;
-            public int dataset;
-            public DateTime time;
         }
         public SqlConnection sqlConnection { get; set; }
-
+        
         #region ListOfDatasets
         List<Data> datas = new List<Data>();
         List<Data> dataset1 = new List<Data>();
@@ -163,11 +161,12 @@ namespace HistoricalComponent
                 sqlConnection.Close();
             }
         }
-
         
         public void WriteToDatabase()
         {
+            
             ReplaceData();
+            ReplaceDataDB();
             Create();
             Connect();
             Write();
@@ -176,373 +175,658 @@ namespace HistoricalComponent
 
         private void Write()
         {
-            WriteToDataset1();
-            WriteToDataset2();
-            WriteToDataset3();
-            WriteToDataset4();
-            WriteToDataset5();
+                WriteToDataset1();
+                WriteToDataset2();
+                WriteToDataset3();
+                WriteToDataset4();
+                WriteToDataset5();
         }
 
         private void WriteToDataset1()
         {
-            if(Update_1_1() == false || Update_1_2() == false)
+            if(Update_1_1().ima == false || Update_1_2().ima == false)
             {
                 InsertInTable_1();
 
             }
-           
-            else if(Update_1_1() == true)
+            else if(Update_1_1().ima == true)
             {
 
-                string command5 = "UPDATE Dataset1 SET Value = @value";
-
-                
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-                    foreach (var item in datas)
+                    if (item.code == "CODE_ANALOG")
                     {
-                        if (item.code == "CODE_ANALOG")
+                        if (item.value > Update_1_1().value + Update_1_1().value * 0.02)
                         {
-
-                            sqlCommand.Parameters.Clear();
-
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset1.Clear();
-
+                            U1_1();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
-
 
             }
-            else if(Update_1_2() == true)
+            else if(Update_1_2().ima == true)
             {
-                string command5 = "UPDATE Dataset1 SET Value = @value";
-
-
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-                    foreach (var item in datas)
+                    if (item.code == "CODE_DIGITAL")
                     {
-                        if (item.code == "CODE_DIGITAL")
+                        if (item.value > Update_1_2().value + Update_1_2().value * 0.02)
                         {
-
-
-                            sqlCommand.Parameters.Clear();
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset1.Clear();
-
+                            U1_2();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
+
+                
             }
         }
         private void WriteToDataset2()
         {
-            if (Update_2_1() == false || Update_2_2() == false)
+            if (Update_2_1().ima == false || Update_2_2().ima == false)
             {
                 InsertInTable_2();
 
             }
-            else if (Update_2_1() == true)
+            else if (Update_2_1().ima == true)
             {
-
-                string command5 = "UPDATE Dataset2 SET Value = @value";
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_CUSTOM")
+                    {
+                        if (item.value > Update_2_1().value + Update_2_1().value * 0.02)
+                        {
+                            U2_2();
+                        }
+                        else
+                            break;
+                    }
+                    else
+                        break;
+                }
                 
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
-                {
-                    foreach (var item in datas)
-                    {
-                        if (item.code == "CODE_CUSTOM")
-                        {
-                            sqlCommand.Parameters.Clear();
-
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset2.Clear();
-
-                        }
-                    }
-                }
-
-
             }
-            else if (Update_2_2() == true)
+            else if (Update_2_2().ima == true)
             {
-                string command5 = "UPDATE Dataset2 SET Value = @value";
-
-               
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-
-                    foreach (var item in datas)
+                    if (item.code == "CODE_LIMITSET")
                     {
-                        if (item.code == "CODE_LIMITSET")
+                        if (item.value > Update_2_2().value + Update_2_2().value * 0.02)
                         {
-
-                            sqlCommand.Parameters.Clear();
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset2.Clear();
-
+                            U2_1();
                         }
-                        
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
+                
             }
         }
         private void WriteToDataset3()
         {
 
-            if (Update_3_1() == false || Update_3_2() == false)
+            if (Update_3_1().ima == false || Update_3_2().ima == false)
             {
                 InsertInTable_3();
 
             }
-            else if (Update_3_1() == true)
+            else if (Update_3_1().ima == true)
             {
-
-                string command5 = "UPDATE Dataset3 SET Value = @value";
-                
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-
-                    foreach (var item in datas)
+                    if (item.code == "CODE_SINGLENOE")
                     {
-
-                        if (item.code == "CODE_SINGLENOE")
+                        if (item.value > Update_3_1().value + Update_3_1().value * 0.02)
                         {
-                            sqlCommand.Parameters.Clear();
-
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset3.Clear();
-
+                            U3_1();
                         }
-
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
-
-
             }
-            else if (Update_3_2() == true)
+            else if (Update_3_2().ima == true)
             {
-                string command5 = "UPDATE Dataset3 SET Value = @value";
-
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-                    foreach (var item in datas)
+                    if (item.code == "CODE_MULTIPLENODE")
                     {
-                        if (item.code == "CODE_MULTIPLENODE")
+                        if (item.value > Update_3_2().value + Update_3_2().value * 0.02)
                         {
-
-                            sqlCommand.Parameters.Clear();
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset3.Clear();
-
+                            U3_2();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
+
+               // U3_2();
             }
         }
         private void WriteToDataset4()
         {
 
-            if (Update_4_1() == false || Update_4_2() == false)
+            if (Update_4_1().ima == false || Update_4_2().ima == false)
             {
                 InsertInTable_4();
 
             }
-            else if (Update_4_1() == true)
+            else if (Update_4_1().ima == true)
             {
-
-                string command5 = "UPDATE Dataset4 SET Value = @value";
-                
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-                    foreach (var item in datas)
+                    if (item.code == "CODE_CONSUMER")
                     {
-                        if (item.code == "CODE_CONSUMER")
+                        if (item.value > Update_4_1().value + Update_4_1().value * 0.02)
                         {
-
-                            sqlCommand.Parameters.Clear();
-
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset4.Clear();
+                            U4_1();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
-
+                
 
             }
-            else if (Update_4_2() == true)
+            else if (Update_4_2().ima == true)
             {
-                string command5 = "UPDATE Dataset4 SET Value = @value";
-                
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+
+                foreach (var item in datas)
                 {
-
-                    foreach (var item in datas)
+                    if (item.code == "CODE_SOURCE")
                     {
-                        if (item.code == "CODE_SOURCE")
+                        if (item.value > Update_4_2().value + Update_4_2().value * 0.02)
                         {
-
-                            sqlCommand.Parameters.Clear();
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset4.Clear();
+                            U4_2();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
+                
             }
         }
         private void WriteToDataset5()
         {
-            if (Update_5_1() == false || Update_5_2() == false)
+            if (Update_5_1().ima == false || Update_5_2().ima == false)
             {
                 InsertInTable_5();
 
             }
-            else if (Update_5_1() == true)
+            else if (Update_5_1().ima == true)
             {
 
-                string command5 = "UPDATE Dataset5 SET Value = @value";
-
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                
+                foreach (var item in datas)
                 {
-
-                    foreach (var item in datas)
+                    if (item.code == "CODE_MOTION")
                     {
-                        if (item.code == "CODE_MOTION")
+                        if (item.value > Update_5_1().value + Update_5_1().value * 0.02)
                         {
-                            sqlCommand.Parameters.Clear();
-
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset5.Clear();
-
+                            U5_1();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
 
-
             }
-            else if (Update_5_2() == true)
+            else if (Update_5_2().ima == true)
             {
-                string command5 = "UPDATE Dataset5 SET Value = @value WHERE";
                 
-                using (SqlCommand sqlCommand = new SqlCommand(command5, sqlConnection))
+                foreach (var item in datas)
                 {
-
-                    foreach (var item in datas)
+                    if (item.code == "CODE_SENSOR")
                     {
-                        if (item.code == "CODE_SENSOR")
+                        if (item.value > Update_5_2().value + Update_5_2().value * 0.02)
                         {
-
-                            sqlCommand.Parameters.Clear();
-                            sqlCommand.Parameters.AddWithValue("@value", item.value);
-
-                            sqlCommand.ExecuteNonQuery();
-
-                            dataset5.Clear();
-
+                            U5_2();
                         }
+                        else
+                            break;
                     }
+                    else
+                        break;
                 }
             }
         }
+
 
         //pravljenje liste
         private void ReplaceData()
         {
             Data data = new Data();
-
-            foreach(var item in WriterToHistorical.descriptionLists)
+            using (StreamWriter sw = new StreamWriter("Log.txt"))
             {
-                foreach(var item2 in item.descriptions)
+                sw.WriteLine("Database");
+
+                foreach (var item in WriterToHistorical.descriptionLists)
                 {
-                    foreach(var item3 in item2.HistoricalProperties)
+                    foreach (var item2 in item.descriptions)
                     {
-                        if(item2.Dataset == 1)
+                        foreach (var item3 in item2.HistoricalProperties)
                         {
-                            data.code = item3.Code;
-                            data.value = item3.HistoricalValue;
+                            if (item2.Dataset == 1)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
 
-                            data.id = item2.Id;
-                            data.dataset = item2.Dataset;
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
 
-                            dataset1.Add(data);
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+                                dataset1.Add(data);
+                            }
+                            else if (item2.Dataset == 2)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+
+                                dataset2.Add(data);
+                            }
+                            else if (item2.Dataset == 3)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+
+                                dataset3.Add(data);
+                            }
+                            else if (item2.Dataset == 4)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+
+                                dataset4.Add(data);
+                            }
+                            else if (item2.Dataset == 5)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+                                dataset5.Add(data);
+                            }
                         }
-                        else if(item2.Dataset == 2)
-                        {
-                            data.code = item3.Code;
-                            data.value = item3.HistoricalValue;
 
-                            data.id = item2.Id;
-                            data.dataset = item2.Dataset;
-
-                            dataset2.Add(data);
-                        }
-                        else if (item2.Dataset == 3)
-                        {
-                            data.code = item3.Code;
-                            data.value = item3.HistoricalValue;
-
-                            data.id = item2.Id;
-                            data.dataset = item2.Dataset;
-
-                            dataset3.Add(data);
-                        }
-                        else if (item2.Dataset == 4)
-                        {
-                            data.code = item3.Code;
-                            data.value = item3.HistoricalValue;
-
-                            data.id = item2.Id;
-                            data.dataset = item2.Dataset;
-
-                            dataset4.Add(data);
-                        }
-                        else if (item2.Dataset == 5)
-                        {
-                            data.code = item3.Code;
-                            data.value = item3.HistoricalValue;
-
-                            data.id = item2.Id;
-                            data.dataset = item2.Dataset;
-
-                            dataset5.Add(data);
-                        }
+                        datas.Add(data);
                     }
-
-                    datas.Add(data);
                 }
             }
         }
+        private void ReplaceDataDB()
+        {
+            Data data = new Data();
+            using (StreamWriter sw = new StreamWriter("LogDB.txt"))
+            {
+                sw.WriteLine("Database");
 
+                foreach (var item in DataFromDB.descriptionLists)
+                {
+                    foreach (var item2 in item.descriptions)
+                    {
+                        foreach (var item3 in item2.HistoricalProperties)
+                        {
+                            if (item2.Dataset == 1)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+                                dataset1.Add(data);
+                            }
+                            else if (item2.Dataset == 2)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+
+                                dataset2.Add(data);
+                            }
+                            else if (item2.Dataset == 3)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+
+                                dataset3.Add(data);
+                            }
+                            else if (item2.Dataset == 4)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+
+                                dataset4.Add(data);
+                            }
+                            else if (item2.Dataset == 5)
+                            {
+                                data.code = item3.Code;
+                                data.value = item3.HistoricalValue;
+
+                                data.id = item2.Id;
+                                data.dataset = item2.Dataset;
+
+
+                                sw.WriteLine(item3.Code.ToString());
+                                sw.WriteLine(item3.HistoricalValue.ToString());
+                                sw.WriteLine(item2.Id.ToString());
+                                sw.WriteLine(item2.Dataset.ToString());
+                                dataset5.Add(data);
+                            }
+                        }
+
+                        datas.Add(data);
+                    }
+                }
+            }
+        }
+        private void U1_1()
+        {
+
+
+
+            string command_delete = "DELETE FROM Dataset1 WHERE Idd=1";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_ANALOG")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+                        
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+
+            InsertInTable_1();
+            
+
+        }
+        private void U1_2()
+        {
+            string command_delete = "DELETE FROM Dataset1 WHERE Idd=2";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_DIGITAL")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+
+            InsertInTable_1();
+        }
+        private void U2_2()
+        {
+            string command_delete = "DELETE FROM Dataset2 WHERE Idd=3";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_CUSTOM")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_2();
+        }
+        private void U2_1()
+        {
+
+            string command_delete = "DELETE FROM Dataset2 WHERE Idd=4";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_LIMITSET")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_2();
+        }
+        private void U3_1()
+        {
+
+            string command_delete = "DELETE FROM Dataset3 WHERE Idd=5";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_SINGLENOE")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_3();
+        }
+        private void U3_2()
+        {
+           
+
+            string command_delete = "DELETE FROM Dataset3 WHERE Idd=6";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_MULTIPLENODE")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_3();
+        }
+        private void U4_1()
+        {
+
+
+            string command_delete = "DELETE FROM Dataset4 WHERE Idd=7";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_CONSUMER")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_4();
+        }
+        private void U4_2()
+        {
+            string command_delete = "DELETE FROM Dataset4 WHERE Idd=8";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_SOURCE")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_4();
+        }
+        private void U5_1()
+        {
+            string command_delete = "DELETE FROM Dataset5 WHERE Idd=9";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_MOTION")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_5();
+
+        }
+        private void U5_2()
+        {
+            string command_delete = "DELETE FROM Dataset5 WHERE Idd=10";
+
+            using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_SENSOR")
+                    {
+
+                        sqlCommand.Parameters.Clear();
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        break;
+                    }
+                }
+            }
+            InsertInTable_5();
+        }
         //upisi
+        #region WrittingDataInTable
         private void InsertInTable_1()
         {
 
@@ -551,9 +835,7 @@ namespace HistoricalComponent
 
             using (SqlCommand sqlCommand = new SqlCommand(command1, sqlConnection))
             {
-
                 
-
                 foreach (var item in dataset1)
                 {
                     try
@@ -711,75 +993,90 @@ namespace HistoricalComponent
                 dataset5.Clear();
             }
         }
+        #endregion
+        #region CheckForUpdate
         //1 CODE_ANALOG
-        private bool Update_1_1()
+        private UpdateData Update_1_1()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+           // bool ima = false;
                 // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset1 WHERE Idd = 1", sqlConnection))
             {
-                    SqlDataReader reader = com.ExecuteReader();
+                SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
-                }else
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+
+                    data.ima = true;
+                }
+                else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
 
         //2 CODE_DIGITAL
-        private bool Update_1_2()
+        private UpdateData Update_1_2()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+            //bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset1 WHERE Idd = 2", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
 
         //3 CODE_CUSTOM
-        private bool Update_2_1()
+        private UpdateData Update_2_1()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+            //bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset2 WHERE Idd = 3", sqlConnection))
             {
-                
+
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
         //4 CODE_LIMITSET
-        private bool Update_2_2()
+        private UpdateData Update_2_2()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+          //  bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset2 WHERE Idd = 4", sqlConnection))
             {
@@ -787,66 +1084,76 @@ namespace HistoricalComponent
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
 
         //5 CODE_SINGLENOE 
-        private bool Update_3_1()
+        private UpdateData Update_3_1()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+           // bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset3 WHERE Idd = 5", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
 
         //6 CODE_MULTIPLENODE
-        private bool Update_3_2()
+        private UpdateData Update_3_2()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+            //bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset3 WHERE Idd = 6", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
 
         //7 CODE_CONSUMER 
-        private bool Update_4_1()
+        private UpdateData Update_4_1()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+            //bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset4 WHERE Idd = 7", sqlConnection))
             {
@@ -854,91 +1161,98 @@ namespace HistoricalComponent
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+                    
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
 
         }
 
         //8 CODE_SOURCE 
-        private bool Update_4_2()
+        private UpdateData Update_4_2()
         {
-            bool ima = false;
+            UpdateData data = new UpdateData();
+           // bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset4 WHERE Idd = 8", sqlConnection))
             {
-
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
         }
 
         //9 CODE_MOTION 
-        private bool Update_5_1()
+        private UpdateData Update_5_1()
         {
-
-            bool ima = false;
+            UpdateData data = new UpdateData();
+          //  bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset5 WHERE Idd = 9", sqlConnection))
             {
-
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
-
+            return data;
         }
 
         //10 CODE_SENSOR 
-        private bool Update_5_2()
+        private UpdateData Update_5_2()
         {
-
-            bool ima = false;
+            UpdateData data = new UpdateData();
+           // bool ima = false;
             // Read specific values in the table.
             using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset5 WHERE Idd = 10", sqlConnection))
             {
-
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    ima = true;
+                    //reader.Read();
+                    //data.value = Convert.ToInt32(reader.GetValue(2));
+                    data.ima = true;
                 }
                 else
                 {
-                    ima = false;
+                    data.ima = false;
                 }
 
                 reader.Close();
             }
-            return ima;
+            return data;
 
         }
-
+        #endregion
     }
 }
