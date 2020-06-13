@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5650BF83-BF2C-405A-BA2C-2DDC42E17DFC}</ProjectGuid>
+    <ProjectGuid>{D8DD65D5-A52F-4B32-BE0C-020A484BDDF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HistoricalComponent</RootNamespace>
-    <AssemblyName>HistoricalComponent</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>DumpingBufferComponent</RootNamespace>
+    <AssemblyName>DumpingBufferComponent</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,27 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database.cs" />
-    <Compile Include="Description.cs" />
-    <Compile Include="DescriptionList.cs" />
-    <Compile Include="DataFromDB.cs" />
-    <Compile Include="HistoricalProperty.cs" />
+    <Compile Include="CollectionDescription.cs" />
+    <Compile Include="DeltaCollectionDescription.cs" />
+    <Compile Include="DumpingProperty.cs" />
+    <Compile Include="DumpingPropertyCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WriterToHistorical.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{44137715-BCAA-4B99-8E43-33DA9EBB8A99}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DumpingBuffer\DumpingBufferComponent.csproj">
-      <Project>{66238638-6BAD-40B5-BC07-06C2219F04B5}</Project>
-      <Name>DumpingBufferComponent</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WriterComponent\WriterComponent.csproj">
-      <Project>{02cc7893-9d8a-4f5e-b4a7-c9aacb627723}</Project>
-      <Name>WriterComponent</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Common;
-using DumpingBuffer;
+using DumpingBufferComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +43,7 @@ namespace HistoricalComponent
                     historicalProperty.HistoricalValue = item2.DumpingValue;
                 }
 
-                description.Id = item.CollectionDescriptionAdd.Id;
+              //  description.Id = item.CollectionDescriptionAdd.Id;
                 description.Dataset = item.CollectionDescriptionAdd.Dataset;
                 dataset = item.CollectionDescriptionAdd.Dataset;
 

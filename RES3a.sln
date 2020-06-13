@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriterComponent", "WriterCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoricalComponent", "HistoricalComponent\HistoricalComponent.csproj", "{5650BF83-BF2C-405A-BA2C-2DDC42E17DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpingBuffer", "DumpingBuffer\DumpingBuffer.csproj", "{66238638-6BAD-40B5-BC07-06C2219F04B5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reader", "Reader\Reader.csproj", "{F7871A14-9157-42AC-A3F2-B763798B36A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{44137715-BCAA-4B99-8E43-33DA9EBB8A99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DumpingBufferComponent", "DumpingBuffer\DumpingBufferComponent.csproj", "{66238638-6BAD-40B5-BC07-06C2219F04B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{5650BF83-BF2C-405A-BA2C-2DDC42E17DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5650BF83-BF2C-405A-BA2C-2DDC42E17DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5650BF83-BF2C-405A-BA2C-2DDC42E17DFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F7871A14-9157-42AC-A3F2-B763798B36A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F7871A14-9157-42AC-A3F2-B763798B36A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7871A14-9157-42AC-A3F2-B763798B36A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{44137715-BCAA-4B99-8E43-33DA9EBB8A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44137715-BCAA-4B99-8E43-33DA9EBB8A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44137715-BCAA-4B99-8E43-33DA9EBB8A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66238638-6BAD-40B5-BC07-06C2219F04B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
