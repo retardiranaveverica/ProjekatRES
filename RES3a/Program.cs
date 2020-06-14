@@ -1,4 +1,5 @@
-﻿using DumpingBufferComponent;
+﻿using Common;
+using DumpingBufferComponent;
 using HistoricalComponent;
 using System;
 using System.Collections.Generic;
