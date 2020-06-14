@@ -1,6 +1,7 @@
 ﻿using Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,14 @@ namespace WriterComponent
             Array values = Enum.GetValues(typeof(ListOfCodes));
             Random random = new Random();
             ListOfCodes c = (ListOfCodes)values.GetValue(random.Next(values.Length));
+            
             data.code = c.ToString();
             data.value = random.Next(50);
+            using (StreamWriter stream = new StreamWriter("Writter.txt", true))
+            {
+                stream.WriteLine("Code: " + data.code);
+                stream.WriteLine("Value: " + data.value);
+            }
 
             return data;
         }
@@ -36,6 +43,12 @@ namespace WriterComponent
             data.code = c.ToString();
             data.value = random.Next(50);
 
+            using (StreamWriter stream = new StreamWriter("WritterII.txt", true))
+            {
+                stream.WriteLine("Code: " + data.code);
+                
+                stream.WriteLine("Value: " + data.value);
+            }
             return data;
         }
     }

@@ -87,7 +87,7 @@ namespace HistoricalComponent
 
         private void Read()
         {
-           
+           using(StreamWriter writer = new StreamWriter("DumpingBufferValues.txt"))
                 foreach(var item in descriptionLists)
                 {
                     foreach(var item2 in item.descriptions)
@@ -99,6 +99,10 @@ namespace HistoricalComponent
                             Console.WriteLine(item3.HistoricalValue);
                             Console.WriteLine(item2.Id);
                             Console.WriteLine(item2.Dataset);
+                            writer.WriteLine("Code: " + item3.Code);
+                            writer.WriteLine("Value" + item3.HistoricalValue);
+                            writer.WriteLine("Id: " +item2.Id);
+                            writer.WriteLine("Dataset: " +item2.Dataset);
                         }
                     }
                 }

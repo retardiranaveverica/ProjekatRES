@@ -43,7 +43,7 @@ namespace HistoricalComponent
         List<Data> dataset5 = new List<Data>();
         #endregion
 
-        List<Data> listOfData = new List<Data>();
+      //  List<Data> listOfData = new List<Data>();
         private void Connect()
         {
             sqlConnection = new SqlConnection(connectionString);
@@ -416,9 +416,8 @@ namespace HistoricalComponent
         private void ReplaceData()
         {
             Data data = new Data();
-            using (StreamWriter sw = new StreamWriter("Log.txt"))
+            using (StreamWriter sw = new StreamWriter("Database.txt", true))
             {
-                sw.WriteLine("Database");
 
                 foreach (var item in WriterToHistorical.descriptionLists)
                 {
@@ -434,10 +433,11 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
+
                                 dataset1.Add(data);
                             }
                             else if (item2.Dataset == 2)
@@ -448,10 +448,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset2.Add(data);
                             }
@@ -463,10 +463,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset3.Add(data);
                             }
@@ -478,10 +478,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset4.Add(data);
                             }
@@ -494,10 +494,10 @@ namespace HistoricalComponent
                                 data.dataset = item2.Dataset;
 
                                 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
                                 dataset5.Add(data);
                             }
                         }
@@ -507,12 +507,13 @@ namespace HistoricalComponent
                 }
             }
         }
+
+        
         private void ReplaceDataDB()
         {
             Data data = new Data();
-            using (StreamWriter sw = new StreamWriter("LogDB.txt"))
+            using (StreamWriter sw = new StreamWriter("LogDB.txt", true))
             {
-                sw.WriteLine("Database");
 
                 foreach (var item in DataFromDB.descriptionLists)
                 {
@@ -528,10 +529,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
                                 dataset1.Add(data);
                             }
                             else if (item2.Dataset == 2)
@@ -542,10 +543,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset2.Add(data);
                             }
@@ -557,10 +558,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset3.Add(data);
                             }
@@ -572,10 +573,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset4.Add(data);
                             }
@@ -588,10 +589,10 @@ namespace HistoricalComponent
                                 data.dataset = item2.Dataset;
 
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
                                 dataset5.Add(data);
                             }
                         }
