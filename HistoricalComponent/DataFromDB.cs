@@ -24,12 +24,12 @@ namespace HistoricalComponent
         DescriptionList descriptionList;
         string code;
         int dataset;
+        
 
         //data from CDAdd
         public void PackAddData()
         {
             Array array = dumpingBufferToHistorical.SendToHistorical();
-            
             list = array.Cast<DeltaCD>().ToList();
 
             historicalProperty = new HistoricalProperty();
@@ -40,6 +40,7 @@ namespace HistoricalComponent
             {
                 foreach(var item2 in item.CollectionDescriptionAdd.PropertyCollection.DumpingProperties)
                 {
+                    
                     historicalProperty.Code = item2.Code;
                     code = item2.Code;
                     historicalProperty.HistoricalValue = item2.DumpingValue;

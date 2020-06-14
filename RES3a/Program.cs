@@ -23,13 +23,13 @@ namespace RES3a
                 Console.WriteLine("2. Slanje direktno na Historical");
 
                 int broj = Int32.Parse(Console.ReadLine());
-        //        database.Create();
+
                 switch (broj)
                 {
 
                     case 1:
                         writerToDumpingBaffer.SetDataToDumpingBuffer();
-                       // data.PackAddData();
+                        data.PackAddData();
                         database.WriteToDatabase();
                         break;
                     case 2:
