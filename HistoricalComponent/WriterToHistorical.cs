@@ -29,7 +29,7 @@ namespace HistoricalComponent
             Console.WriteLine("******************");
 
 
-            int indeks = ChechForUpdate(code);
+            int indeks = CheckForUpdate(code);
 
             if (indeks < 0)
             {
@@ -139,7 +139,7 @@ namespace HistoricalComponent
             }
         }
 
-        private int ChechForUpdate(string code)
+        private int CheckForUpdate(string code)
         {
             int found = -1;
             foreach(var item in descriptionLists)

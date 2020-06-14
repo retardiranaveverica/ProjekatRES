@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 namespace HistoricalComponentTest
 {
     [TestFixture]
-    class HistoricalPropertyTest
+    class DescriptionListTest
     {
         [Test]
         public void EmptyConstructorTest()
         {
-            HistoricalProperty historicalProperty = new HistoricalProperty();
-            Assert.IsNotNull(historicalProperty);
+            DescriptionList descriptionList = new DescriptionList();
+            Assert.IsNotNull(descriptionList);
         }
-
-       
     }
 }
