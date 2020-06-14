@@ -13,27 +13,26 @@ namespace DumpingBufferComponent
     {
         IWriter writer = new Writer();
 
-
         DumpingPropertyCollection propertyCollection = new DumpingPropertyCollection();
         CollectionDescription collectionDescription = new CollectionDescription();
         List<CollectionDescription> collectionDescriptions = new List<CollectionDescription>();
         public static List<DeltaCD> deltaCDs = new List<DeltaCD>();
-
-        //int for count the number of codes
+        List<DeltaCD> deltaCDsPom = new List<DeltaCD>();
 
 
         int dataset = 0;
-
         int trId = 0;
         string code;
         int value;
-        int numberOfRecivedData = 0;
-        int cdID = 0;
         int count = 0;
-        bool isDatasetExist= false;
+        bool isDatasetExist = false;
+        bool isEqualsCode = false;
+
         public void SetDataToDumpingBuffer()
         {
-
+            propertyCollection = new DumpingPropertyCollection();
+            collectionDescription = new CollectionDescription();
+        
             while (count < 10)
             {
                 code = writer.WriteToDumpinBuffer().code;
@@ -47,10 +46,10 @@ namespace DumpingBufferComponent
                 dumpingProperty.DumpingValue = value;//мапирати....
 
                 dataset = GetDataset(code);
-
+                //ako ne postoji nijedan cd
                 if (collectionDescriptions.Count == 0)
                 {
-                    CreateCD(dumpingProperty);
+                    CreateCD(dumpingProperty);//kreiramo
                 }
                 else
                 {
@@ -64,28 +63,35 @@ namespace DumpingBufferComponent
                             {
                                 if (dp.Code == code)//provera da li postoji taj code
                                 {
+                                    isEqualsCode = true;
                                     dp.DumpingValue = value;//ako postoji, azuruiranje vrednosti
                                 }
-                                else
+                                
+                            }
+                            if(!isEqualsCode)
+                            {
+                                cd.PropertyCollection.DumpingProperties.Add(dumpingProperty);//ako ne, dodajemo
+                                if (deltaCDs.Count()==0)
                                 {
-                                    cd.PropertyCollection.DumpingProperties.Add(dumpingProperty);//ako ne, dodajemo
-                                    DeltaCD deltaCD = new DeltaCD();//i spreman je za pakovanje
+                                    DeltaCD deltaCD = new DeltaCD();
                                     deltaCD.TranscationID = ++trId;
                                     deltaCD.CollectionDescriptionAdd = cd;
                                     collectionDescriptions.Remove(cd);
                                     deltaCDs.Add(deltaCD);
+
                                 }
                             }
                         }
 
-                        
+
                     }
                     //ako ne postoji CD, napravimo ga
-                    if(!isDatasetExist)
+                    if (!isDatasetExist)
                     {
                         CreateCD(dumpingProperty);
                     }
                     isDatasetExist = false;
+                    isEqualsCode = false;
                 }
 
 
@@ -100,12 +106,12 @@ namespace DumpingBufferComponent
                         count = 0;
                     }
                 }
-
                 Thread.Sleep(2000);
             }
 
-            Console.WriteLine("delta"+deltaCDs.Count);
-            Console.WriteLine("coll"+collectionDescriptions.Count);
+            count = 0;
+            Console.WriteLine("delta" + deltaCDs.Count);
+            Console.WriteLine("coll" + collectionDescriptions.Count);
         }
 
 
