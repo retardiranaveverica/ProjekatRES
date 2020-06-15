@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionDescription.cs" />
+    <Compile Include="DatabaseDB.cs" />
     <Compile Include="DeltaCD.cs" />
     <Compile Include="DumpingBufferToHistorical.cs" />
     <Compile Include="DumpingProperty.cs" />

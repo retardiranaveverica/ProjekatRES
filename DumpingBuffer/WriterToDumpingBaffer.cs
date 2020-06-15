@@ -1,6 +1,8 @@
 ﻿using Common;
+using DumpingBuffer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,10 +17,9 @@ namespace DumpingBufferComponent
 
         DumpingPropertyCollection propertyCollection = new DumpingPropertyCollection();
         CollectionDescription collectionDescription = new CollectionDescription();
-        List<CollectionDescription> collectionDescriptions = new List<CollectionDescription>();
+        public static List<CollectionDescription> collectionDescriptions = new List<CollectionDescription>();
         public static List<DeltaCD> deltaCDs = new List<DeltaCD>();
-        List<DeltaCD> deltaCDsPom = new List<DeltaCD>();
-
+        DatabaseDB databaseDB = new DatabaseDB();
 
         int dataset = 0;
         int trId = 0;
@@ -27,94 +28,109 @@ namespace DumpingBufferComponent
         int count = 0;
         bool isDatasetExist = false;
         bool isEqualsCode = false;
+        StreamWriter sw = new StreamWriter("WToDB.txt");
 
         public void SetDataToDumpingBuffer()
         {
-            propertyCollection = new DumpingPropertyCollection();
-            collectionDescription = new CollectionDescription();
-        
-            while (count < 10)
+            databaseDB.Create();
+            databaseDB.Connect();
+            using (sw)
             {
-                code = writer.WriteToDumpinBuffer().code;
-                value = writer.WriteToDumpinBuffer().value;
+                propertyCollection = new DumpingPropertyCollection();
+                collectionDescription = new CollectionDescription();
 
-                Console.WriteLine("******************");
-                Console.WriteLine("DumpingBuffer code: " + code);
-                Console.WriteLine("DumpingBuffer value:" + value);
-                DumpingProperty dumpingProperty = new DumpingProperty();
-                dumpingProperty.Code = code;
-                dumpingProperty.DumpingValue = value;//мапирати....
+                while (count < 10)
+                {
 
-                dataset = GetDataset(code);
-                //ako ne postoji nijedan cd
-                if (collectionDescriptions.Count == 0)
-                {
-                    CreateCD(dumpingProperty);//kreiramo
-                }
-                else
-                {
-                    foreach (CollectionDescription cd in collectionDescriptions.ToList())
+                    sw.WriteLine("******************************************");
+
+
+                    code = writer.WriteToDumpinBuffer().code;
+                    value = writer.WriteToDumpinBuffer().value;
+
+                    sw.WriteLine("CODE: " + code);
+                    sw.WriteLine("VALUE:" + value);
+                    
+                    Console.WriteLine("******************");
+                    Console.WriteLine("DumpingBuffer code: " + code);
+                    Console.WriteLine("DumpingBuffer value:" + value);
+                    DumpingProperty dumpingProperty = new DumpingProperty();
+                    dumpingProperty.Code = code;
+                    dumpingProperty.DumpingValue = value;
+                    
+                    dataset = GetDataset(code);
+                    //ako ne postoji nijedan cd
+                    if (collectionDescriptions.Count == 0)
                     {
-                        //da li u CDs postoji CD sa tim dataset-om
-                        if (cd.Dataset == dataset)//ako postoji
+                        CreateCD(dumpingProperty);//kreiramo
+                        databaseDB.WriteToDatabase();
+
+                    }
+                    else
+                    {
+                        foreach (CollectionDescription cd in collectionDescriptions.ToList())
                         {
-                            isDatasetExist = true;
-                            foreach (DumpingProperty dp in cd.PropertyCollection.DumpingProperties.ToList())
+                            //da li u CDs postoji CD sa tim dataset-om
+                            if (cd.Dataset == dataset)//ako postoji
                             {
-                                if (dp.Code == code)//provera da li postoji taj code
+                                isDatasetExist = true;
+                                foreach (DumpingProperty dp in cd.PropertyCollection.DumpingProperties.ToList())
                                 {
-                                    isEqualsCode = true;
-                                    dp.DumpingValue = value;//ako postoji, azuruiranje vrednosti
-                                }
-                                
-                            }
-                            if(!isEqualsCode)
-                            {
-                                cd.PropertyCollection.DumpingProperties.Add(dumpingProperty);//ako ne, dodajemo
-                                if (deltaCDs.Count()==0)
-                                {
-                                    DeltaCD deltaCD = new DeltaCD();
-                                    deltaCD.TranscationID = ++trId;
-                                    deltaCD.CollectionDescriptionAdd = cd;
-                                    collectionDescriptions.Remove(cd);
-                                    deltaCDs.Add(deltaCD);
+                                    if (dp.Code == code)//provera da li postoji taj code
+                                    {
+                                        isEqualsCode = true;
+                                        dp.DumpingValue = value;//ako postoji, azuruiranje vrednosti
+                                        databaseDB.WriteToDatabase();
+                                    }
 
                                 }
+                                if (!isEqualsCode)
+                                {
+                                    cd.PropertyCollection.DumpingProperties.Add(dumpingProperty);//ako ne, dodajemo
+                                    databaseDB.WriteToDatabase();
+                                    if (deltaCDs.Count() == 0)
+                                    {
+                                        DeltaCD deltaCD = new DeltaCD();
+                                        deltaCD.TranscationID = ++trId;
+                                        deltaCD.CollectionDescriptionAdd = cd;
+                                        collectionDescriptions.Remove(cd);
+                                        deltaCDs.Add(deltaCD);
+                                    }
+                                }
                             }
+
+
                         }
-
-
+                        //ako ne postoji CD, napravimo ga
+                        if (!isDatasetExist)
+                        {
+                            CreateCD(dumpingProperty);
+                            databaseDB.WriteToDatabase();
+                        }
+                        isDatasetExist = false;
+                        isEqualsCode = false;
+                        
                     }
-                    //ako ne postoji CD, napravimo ga
-                    if (!isDatasetExist)
+                    count++;
+
+                    Read();
+
+                    if (count == 10)
                     {
-                        CreateCD(dumpingProperty);
+                        if (deltaCDs.Count == 0)
+                        {
+                            count = 0;
+                        }
                     }
-                    isDatasetExist = false;
-                    isEqualsCode = false;
+                    Thread.Sleep(2000);
                 }
 
-
-                count++;
-
-                Read();
-
-                if (count == 10)
-                {
-                    if (deltaCDs.Count == 0)
-                    {
-                        count = 0;
-                    }
-                }
-                Thread.Sleep(2000);
+                count = 0;
             }
 
-            count = 0;
-            Console.WriteLine("delta" + deltaCDs.Count);
-            Console.WriteLine("coll" + collectionDescriptions.Count);
+       //     databaseDB.sqlConnection.Close();
+
         }
-
-
 
         private void Read()
         {

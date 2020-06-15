@@ -1,4 +1,5 @@
 ﻿using Common;
+using DumpingBufferComponent;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,26 +8,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HistoricalComponent
+namespace DumpingBuffer
 {
-    public class Database : IDatabase
+    public class DatabaseDB : IDatabase
     {
         #region connectionString and commands for making tables
-        //sneza 
-        //string connectionString = "Data Source=localhost;Initial Catalog=Database;Integrated Security=True";
+        //sneza
+        //
         //maja
-        string connectionString = "Data Source=localhost;Initial Catalog=HistoricalDatabase;Integrated Security=True";
-        string command_1 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset1') BEGIN  CREATE TABLE[dbo].[Dataset1] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
-        string command_2 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset2') BEGIN  CREATE TABLE[dbo].[Dataset2] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
-        string command_3 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset3') BEGIN  CREATE TABLE[dbo].[Dataset3] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
-        string command_4 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset4') BEGIN  CREATE TABLE[dbo].[Dataset4] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
-        string command_5 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset5') BEGIN  CREATE TABLE[dbo].[Dataset5] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
-        #endregion 
+        string connectionString = "Data Source=localhost;Initial Catalog=Database;Integrated Security=True";
+        string command_1 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DatasetDB1') BEGIN  CREATE TABLE[dbo].[DatasetDB1] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL ); END;";
+        string command_2 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DatasetDB2') BEGIN  CREATE TABLE[dbo].[DatasetDB2] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL ); END;";
+        string command_3 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DatasetDB3') BEGIN  CREATE TABLE[dbo].[DatasetDB3] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL ); END;";
+        string command_4 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DatasetDB4') BEGIN  CREATE TABLE[dbo].[DatasetDB4] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL ); END;";
+        string command_5 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'DatasetDB5') BEGIN  CREATE TABLE[dbo].[DatasetDB5] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL ); END;";
 
         public struct Data
         {
             public string code;
-            public int id;
+            public string id;
             public int value;
             public int dataset;
         }
@@ -36,7 +36,7 @@ namespace HistoricalComponent
             public int value;
         }
         public SqlConnection sqlConnection { get; set; }
-        
+
         #region ListOfDatasets
         List<Data> datas = new List<Data>();
         List<Data> dataset1 = new List<Data>();
@@ -47,10 +47,10 @@ namespace HistoricalComponent
         #endregion
 
         List<Data> listOfData = new List<Data>();
-        private void Connect()
+        public void Connect()
         {
             sqlConnection = new SqlConnection(connectionString);
-            
+
             try
             {
                 Console.WriteLine("Openning Connection ...");
@@ -79,14 +79,15 @@ namespace HistoricalComponent
         {
             try
             {
-               // sqlConnection.Open();
+                // sqlConnection.Open();
                 Connect();
                 using (SqlCommand sqlCommand = new SqlCommand(command_1, sqlConnection))
                 {
                     sqlCommand.ExecuteNonQuery();
                 }
                 sqlConnection.Close();
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 sqlConnection.Close();
@@ -164,71 +165,57 @@ namespace HistoricalComponent
                 sqlConnection.Close();
             }
         }
-        
+
         public void WriteToDatabase()
         {
-            
             ReplaceData();
-            ReplaceDataDB();
-            Create();
-            Connect();
             Write();
-            sqlConnection.Close();
         }
 
         private void Write()
         {
-                WriteToDataset1();
-                WriteToDataset2();
-                WriteToDataset3();
-                WriteToDataset4();
-                WriteToDataset5();
+            WriteToDataset1();
+            WriteToDataset2();
+            WriteToDataset3();
+            WriteToDataset4();
+            WriteToDataset5();
         }
 
         private void WriteToDataset1()
         {
-            if(Update_1_1().ima == false || Update_1_2().ima == false)
+            if (Update_1_1().ima == false && Update_1_2().ima == false)
             {
                 InsertInTable_1();
 
             }
-            else if(Update_1_1().ima == true)
+            else if (Update_1_1().ima == true)
             {
 
                 foreach (var item in datas)
                 {
                     if (item.code == "CODE_ANALOG")
                     {
-                        if (item.value > Update_1_1().value + Update_1_1().value * 0.02)
-                        {
-                            U1_1();
-                        }
-                        else
-                            break;
+                       U1_1();
+           
                     }
                     else
                         break;
                 }
 
             }
-            else if(Update_1_2().ima == true)
+            else if (Update_1_2().ima == true)
             {
                 foreach (var item in datas)
                 {
                     if (item.code == "CODE_DIGITAL")
                     {
-                        if (item.value > Update_1_2().value + Update_1_2().value * 0.02)
-                        {
-                            U1_2();
+                        U1_2();
                         }
-                        else
-                            break;
-                    }
                     else
                         break;
                 }
 
-                
+
             }
         }
         private void WriteToDataset2()
@@ -244,17 +231,12 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_CUSTOM")
                     {
-                        if (item.value > Update_2_1().value + Update_2_1().value * 0.02)
-                        {
                             U2_2();
-                        }
-                        else
-                            break;
-                    }
+                     }
                     else
                         break;
                 }
-                
+
             }
             else if (Update_2_2().ima == true)
             {
@@ -262,17 +244,12 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_LIMITSET")
                     {
-                        if (item.value > Update_2_2().value + Update_2_2().value * 0.02)
-                        {
                             U2_1();
-                        }
-                        else
-                            break;
-                    }
+                     }
                     else
                         break;
                 }
-                
+
             }
         }
         private void WriteToDataset3()
@@ -289,13 +266,8 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_SINGLENOE")
                     {
-                        if (item.value > Update_3_1().value + Update_3_1().value * 0.02)
-                        {
-                            U3_1();
-                        }
-                        else
-                            break;
-                    }
+                          U3_1();
+                         }
                     else
                         break;
                 }
@@ -306,18 +278,13 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_MULTIPLENODE")
                     {
-                        if (item.value > Update_3_2().value + Update_3_2().value * 0.02)
-                        {
                             U3_2();
-                        }
-                        else
-                            break;
-                    }
+                     }
                     else
                         break;
                 }
 
-               // U3_2();
+                // U3_2();
             }
         }
         private void WriteToDataset4()
@@ -334,17 +301,12 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_CONSUMER")
                     {
-                        if (item.value > Update_4_1().value + Update_4_1().value * 0.02)
-                        {
-                            U4_1();
-                        }
-                        else
-                            break;
-                    }
+                         U4_1();
+                         }
                     else
                         break;
                 }
-                
+
 
             }
             else if (Update_4_2().ima == true)
@@ -354,17 +316,13 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_SOURCE")
                     {
-                        if (item.value > Update_4_2().value + Update_4_2().value * 0.02)
-                        {
+                        
                             U4_2();
                         }
-                        else
-                            break;
-                    }
                     else
                         break;
                 }
-                
+
             }
         }
         private void WriteToDataset5()
@@ -377,18 +335,14 @@ namespace HistoricalComponent
             else if (Update_5_1().ima == true)
             {
 
-                
+
                 foreach (var item in datas)
                 {
                     if (item.code == "CODE_MOTION")
                     {
-                        if (item.value > Update_5_1().value + Update_5_1().value * 0.02)
-                        {
+                        
                             U5_1();
                         }
-                        else
-                            break;
-                    }
                     else
                         break;
                 }
@@ -396,18 +350,13 @@ namespace HistoricalComponent
             }
             else if (Update_5_2().ima == true)
             {
-                
+
                 foreach (var item in datas)
                 {
                     if (item.code == "CODE_SENSOR")
                     {
-                        if (item.value > Update_5_2().value + Update_5_2().value * 0.02)
-                        {
-                            U5_2();
+                         U5_2();
                         }
-                        else
-                            break;
-                    }
                     else
                         break;
                 }
@@ -419,185 +368,90 @@ namespace HistoricalComponent
         private void ReplaceData()
         {
             Data data = new Data();
-            using (StreamWriter sw = new StreamWriter("Log.txt"))
+            using (StreamWriter sw = new StreamWriter("LogDumpingBaffer.txt"))
             {
                 sw.WriteLine("Database");
 
-                foreach (var item in WriterToHistorical.descriptionLists)
+                foreach (var item in WriterToDumpingBaffer.collectionDescriptions)
                 {
-                    foreach (var item2 in item.descriptions)
+                    foreach (var item2 in item.PropertyCollection.DumpingProperties)
                     {
-                        foreach (var item3 in item2.HistoricalProperties)
+
+                        if (item.Dataset == 1)
                         {
-                            if (item2.Dataset == 1)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
+                            data.code = item2.Code;
+                            data.value = item2.DumpingValue;
 
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
+                            data.id = item.Id;
+                            data.dataset = item.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-                                dataset1.Add(data);
-                            }
-                            else if (item2.Dataset == 2)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
+                            sw.WriteLine(item2.Code.ToString());
+                            sw.WriteLine(item2.DumpingValue.ToString());
+                            sw.WriteLine(item.Id.ToString());
+                            sw.WriteLine(item.Dataset.ToString());
+                            dataset1.Add(data);
+                        }
+                        else if (item.Dataset == 2)
+                        {
+                            data.code = item2.Code;
+                            data.value = item2.DumpingValue;
 
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
+                            data.id = item.Id;
+                            data.dataset = item.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                            sw.WriteLine(item2.Code.ToString());
+                            sw.WriteLine(item2.DumpingValue.ToString());
+                            sw.WriteLine(item.Id.ToString());
+                            sw.WriteLine(item.Dataset.ToString());
 
-                                dataset2.Add(data);
-                            }
-                            else if (item2.Dataset == 3)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
+                            dataset2.Add(data);
+                        }
+                        else if (item.Dataset == 3)
+                        {
+                            data.code = item2.Code;
+                            data.value = item2.DumpingValue;
 
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
+                            data.id = item.Id;
+                            data.dataset = item.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                            sw.WriteLine(item2.Code.ToString());
+                            sw.WriteLine(item2.DumpingValue.ToString());
+                            sw.WriteLine(item.Id.ToString());
+                            sw.WriteLine(item.Dataset.ToString());
 
-                                dataset3.Add(data);
-                            }
-                            else if (item2.Dataset == 4)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
+                            dataset3.Add(data);
+                        }
+                        else if (item.Dataset == 4)
+                        {
+                            data.code = item2.Code;
+                            data.value = item2.DumpingValue;
 
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
+                            data.id = item.Id;
+                            data.dataset = item.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                            sw.WriteLine(item2.Code.ToString());
+                            sw.WriteLine(item2.DumpingValue.ToString());
+                            sw.WriteLine(item.Id.ToString());
+                            sw.WriteLine(item.Dataset.ToString());
 
-                                dataset4.Add(data);
-                            }
-                            else if (item2.Dataset == 5)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
+                            dataset4.Add(data);
+                        }
+                        else if (item.Dataset == 5)
+                        {
+                            data.code = item2.Code;
+                            data.value = item2.DumpingValue;
 
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
+                            data.id = item.Id;
+                            data.dataset = item.Dataset;
 
-                                
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-                                dataset5.Add(data);
-                            }
+
+                            sw.WriteLine(item2.Code.ToString());
+                            sw.WriteLine(item2.DumpingValue.ToString());
+                            sw.WriteLine(item.Id.ToString());
+                            sw.WriteLine(item.Dataset.ToString());
+                            dataset5.Add(data);
                         }
 
-                        datas.Add(data);
-                    }
-                }
-            }
-        }
-        private void ReplaceDataDB()
-        {
-            Data data = new Data();
-            using (StreamWriter sw = new StreamWriter("LogDB.txt"))
-            {
-                sw.WriteLine("Database");
-
-                foreach (var item in DataFromDB.descriptionLists)
-                {
-                    foreach (var item2 in item.descriptions)
-                    {
-                        foreach (var item3 in item2.HistoricalProperties)
-                        {
-                            if (item2.Dataset == 1)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
-
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
-
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-                                dataset1.Add(data);
-                            }
-                            else if (item2.Dataset == 2)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
-
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
-
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-
-                                dataset2.Add(data);
-                            }
-                            else if (item2.Dataset == 3)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
-
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
-
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-
-                                dataset3.Add(data);
-                            }
-                            else if (item2.Dataset == 4)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
-
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
-
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-
-                                dataset4.Add(data);
-                            }
-                            else if (item2.Dataset == 5)
-                            {
-                                data.code = item3.Code;
-                                data.value = item3.HistoricalValue;
-
-                                data.id = item2.Id;
-                                data.dataset = item2.Dataset;
-
-
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
-                                dataset5.Add(data);
-                            }
-                        }
 
                         datas.Add(data);
                     }
@@ -609,7 +463,7 @@ namespace HistoricalComponent
 
 
 
-            string command_delete = "DELETE FROM Dataset1 WHERE Idd=1";
+            string command_delete = "DELETE FROM DatasetDB1 WHERE Code='CODE_ANALOG'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -619,7 +473,7 @@ namespace HistoricalComponent
                     {
 
                         sqlCommand.Parameters.Clear();
-                        
+
                         sqlCommand.ExecuteNonQuery();
 
                         break;
@@ -628,12 +482,12 @@ namespace HistoricalComponent
             }
 
             InsertInTable_1();
-            
+
 
         }
         private void U1_2()
         {
-            string command_delete = "DELETE FROM Dataset1 WHERE Idd=2";
+            string command_delete = "DELETE FROM DatasetDB1 WHERE Code='CODE_DIGITAL'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -655,7 +509,7 @@ namespace HistoricalComponent
         }
         private void U2_2()
         {
-            string command_delete = "DELETE FROM Dataset2 WHERE Idd=3";
+            string command_delete = "DELETE FROM DatasetDB2 WHERE Code='CODE_CUSTOM'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -677,7 +531,7 @@ namespace HistoricalComponent
         private void U2_1()
         {
 
-            string command_delete = "DELETE FROM Dataset2 WHERE Idd=4";
+            string command_delete = "DELETE FROM DatasetDB2 WHERE Code='CODE_LIMITSET'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -699,7 +553,7 @@ namespace HistoricalComponent
         private void U3_1()
         {
 
-            string command_delete = "DELETE FROM Dataset3 WHERE Idd=5";
+            string command_delete = "DELETE FROM DatasetDB3 WHERE Code='CODE_SINGLENOE'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -720,9 +574,9 @@ namespace HistoricalComponent
         }
         private void U3_2()
         {
-           
 
-            string command_delete = "DELETE FROM Dataset3 WHERE Idd=6";
+
+            string command_delete = "DELETE FROM DatasetDB3 WHERE Code='CODE_MULTIPLENODE'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -745,7 +599,7 @@ namespace HistoricalComponent
         {
 
 
-            string command_delete = "DELETE FROM Dataset4 WHERE Idd=7";
+            string command_delete = "DELETE FROM DatasetDB4 WHERE Code='CODE_CONSUMER'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -766,7 +620,7 @@ namespace HistoricalComponent
         }
         private void U4_2()
         {
-            string command_delete = "DELETE FROM Dataset4 WHERE Idd=8";
+            string command_delete = "DELETE FROM DatasetDB4 WHERE Code='CODE_SOURCE'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -787,7 +641,7 @@ namespace HistoricalComponent
         }
         private void U5_1()
         {
-            string command_delete = "DELETE FROM Dataset5 WHERE Idd=9";
+            string command_delete = "DELETE FROM DatasetDB5 WHERE Code='CODE_MOTION'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -809,7 +663,7 @@ namespace HistoricalComponent
         }
         private void U5_2()
         {
-            string command_delete = "DELETE FROM Dataset5 WHERE Idd=10";
+            string command_delete = "DELETE FROM DatasetDB5 WHERE Code='CODE_SENSOR'";
 
             using (SqlCommand sqlCommand = new SqlCommand(command_delete, sqlConnection))
             {
@@ -833,12 +687,12 @@ namespace HistoricalComponent
         private void InsertInTable_1()
         {
 
-            string command1 = "SET IDENTITY_INSERT Dataset1 ON INSERT INTO Dataset1 (Idd, Dataset, Value, Code, Timestamp) VALUES (@id, @dataset, @value, @code, @timestamp)";
+            string command1 = "SET IDENTITY_INSERT DatasetDB1 ON INSERT INTO DatasetDB1 (Idd, Dataset, Value, Code) VALUES (@id, @dataset, @value, @code)";
 
 
             using (SqlCommand sqlCommand = new SqlCommand(command1, sqlConnection))
             {
-                
+
                 foreach (var item in dataset1)
                 {
                     try
@@ -848,7 +702,6 @@ namespace HistoricalComponent
                         sqlCommand.Parameters.AddWithValue("@dataset", item.dataset);
                         sqlCommand.Parameters.AddWithValue("@code", item.code);
                         sqlCommand.Parameters.AddWithValue("@value", item.value);
-                        sqlCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
 
                         sqlCommand.ExecuteNonQuery();
 
@@ -860,13 +713,13 @@ namespace HistoricalComponent
                 }
 
 
-                dataset1.Clear();
+   //           dataset1.Clear();
             }
         }
         private void InsertInTable_2()
         {
 
-            string command1 = "SET IDENTITY_INSERT Dataset2 ON INSERT INTO Dataset2 (Idd, Dataset, Value, Code, Timestamp) VALUES (@id, @dataset, @value, @code, @timestamp)";
+            string command1 = "SET IDENTITY_INSERT DatasetDB2 ON INSERT INTO DatasetDB2 (Idd, Dataset, Value, Code) VALUES (@id, @dataset, @value, @code)";
 
 
             using (SqlCommand sqlCommand = new SqlCommand(command1, sqlConnection))
@@ -880,7 +733,6 @@ namespace HistoricalComponent
                         sqlCommand.Parameters.AddWithValue("@dataset", item.dataset);
                         sqlCommand.Parameters.AddWithValue("@code", item.code);
                         sqlCommand.Parameters.AddWithValue("@value", item.value);
-                        sqlCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
 
                         sqlCommand.ExecuteNonQuery();
 
@@ -899,7 +751,7 @@ namespace HistoricalComponent
         {
 
 
-            string command1 = "SET IDENTITY_INSERT Dataset3 ON INSERT INTO Dataset3 (Idd, Dataset, Value, Code, Timestamp) VALUES (@id, @dataset, @value, @code, @timestamp)";
+            string command1 = "SET IDENTITY_INSERT DatasetDB3 ON INSERT INTO DatasetDB3 (Idd, Dataset, Value, Code) VALUES (@id, @dataset, @value, @code)";
 
 
             using (SqlCommand sqlCommand = new SqlCommand(command1, sqlConnection))
@@ -916,8 +768,7 @@ namespace HistoricalComponent
                         sqlCommand.Parameters.AddWithValue("@dataset", item.dataset);
                         sqlCommand.Parameters.AddWithValue("@code", item.code);
                         sqlCommand.Parameters.AddWithValue("@value", item.value);
-                        sqlCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
-
+                        
                         sqlCommand.ExecuteNonQuery();
 
                     }
@@ -930,12 +781,12 @@ namespace HistoricalComponent
 
                 dataset3.Clear();
             }
-            
+
         }
         private void InsertInTable_4()
         {
 
-            string command1 = "SET IDENTITY_INSERT Dataset4 ON INSERT INTO Dataset4 (Idd, Dataset, Value, Code, Timestamp) VALUES (@id, @dataset, @value, @code, @timestamp)";
+            string command1 = "SET IDENTITY_INSERT DatasetDB4 ON INSERT INTO DatasetDB4 (Idd, Dataset, Value, Code) VALUES (@id, @dataset, @value, @code)";
 
 
             using (SqlCommand sqlCommand = new SqlCommand(command1, sqlConnection))
@@ -949,8 +800,7 @@ namespace HistoricalComponent
                         sqlCommand.Parameters.AddWithValue("@dataset", item.dataset);
                         sqlCommand.Parameters.AddWithValue("@code", item.code);
                         sqlCommand.Parameters.AddWithValue("@value", item.value);
-                        sqlCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
-
+                        
                         sqlCommand.ExecuteNonQuery();
 
                     }
@@ -967,7 +817,7 @@ namespace HistoricalComponent
         private void InsertInTable_5()
         {
 
-            string command1 = "SET IDENTITY_INSERT Dataset5 ON INSERT INTO Dataset5 (Idd, Dataset, Value, Code, Timestamp) VALUES (@id, @dataset, @value, @code, @timestamp)";
+            string command1 = "SET IDENTITY_INSERT DatasetDB5 ON INSERT INTO DatasetDB5 (Idd, Dataset, Value, Code) VALUES (@id, @dataset, @value, @code)";
 
 
             using (SqlCommand sqlCommand = new SqlCommand(command1, sqlConnection))
@@ -981,7 +831,6 @@ namespace HistoricalComponent
                         sqlCommand.Parameters.AddWithValue("@dataset", item.dataset);
                         sqlCommand.Parameters.AddWithValue("@code", item.code);
                         sqlCommand.Parameters.AddWithValue("@value", item.value);
-                        sqlCommand.Parameters.AddWithValue("@timestamp", DateTime.Now);
 
                         sqlCommand.ExecuteNonQuery();
 
@@ -1002,10 +851,11 @@ namespace HistoricalComponent
         private UpdateData Update_1_1()
         {
             UpdateData data = new UpdateData();
-           // bool ima = false;
-                // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset1 WHERE Idd = 1", sqlConnection))
+            // bool ima = false;
+            // Read specific values in the table.
+            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM DatasetDB1 WHERE Code='CODE_ANALOG'", sqlConnection))
             {
+                
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
                 {
@@ -1030,7 +880,7 @@ namespace HistoricalComponent
             UpdateData data = new UpdateData();
             //bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset1 WHERE Idd = 2", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM DatasetDB1 WHERE Code='CODE_DIGITAL'", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
@@ -1055,7 +905,7 @@ namespace HistoricalComponent
             UpdateData data = new UpdateData();
             //bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset2 WHERE Idd = 3", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd FROM DatasetDB2 WHERE Code='CODE_CUSTOM'", sqlConnection))
             {
 
                 SqlDataReader reader = com.ExecuteReader();
@@ -1079,9 +929,9 @@ namespace HistoricalComponent
         private UpdateData Update_2_2()
         {
             UpdateData data = new UpdateData();
-          //  bool ima = false;
+            //  bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset2 WHERE Idd = 4", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd FROM DatasetDB2 WHERE Code='CODE_LIMITSET'", sqlConnection))
             {
 
                 SqlDataReader reader = com.ExecuteReader();
@@ -1105,9 +955,9 @@ namespace HistoricalComponent
         private UpdateData Update_3_1()
         {
             UpdateData data = new UpdateData();
-           // bool ima = false;
+            // bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset3 WHERE Idd = 5", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM DatasetDB3 WHERE Code='CODE_SINGLENOE'", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
@@ -1132,7 +982,7 @@ namespace HistoricalComponent
             UpdateData data = new UpdateData();
             //bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM Dataset3 WHERE Idd = 6", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd, Dataset, Value, Code  FROM DatasetDB3 WHERE Code='CODE_MULTIPLENODE'", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
@@ -1158,7 +1008,7 @@ namespace HistoricalComponent
             UpdateData data = new UpdateData();
             //bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset4 WHERE Idd = 7", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd FROM DatasetDB4 WHERE Code='CONSUMER'", sqlConnection))
             {
 
                 SqlDataReader reader = com.ExecuteReader();
@@ -1166,7 +1016,7 @@ namespace HistoricalComponent
                 {
                     //reader.Read();
                     //data.value = Convert.ToInt32(reader.GetValue(2));
-                    
+
                     data.ima = true;
                 }
                 else
@@ -1184,9 +1034,9 @@ namespace HistoricalComponent
         private UpdateData Update_4_2()
         {
             UpdateData data = new UpdateData();
-           // bool ima = false;
+            // bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset4 WHERE Idd = 8", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd FROM DatasetDB4 WHERE Code='CODE_SOURCE'", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
@@ -1210,9 +1060,9 @@ namespace HistoricalComponent
         private UpdateData Update_5_1()
         {
             UpdateData data = new UpdateData();
-          //  bool ima = false;
+            //  bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset5 WHERE Idd = 9", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd FROM DatasetDB5 WHERE Code='CODE_MOTION'", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
@@ -1235,9 +1085,9 @@ namespace HistoricalComponent
         private UpdateData Update_5_2()
         {
             UpdateData data = new UpdateData();
-           // bool ima = false;
+            // bool ima = false;
             // Read specific values in the table.
-            using (SqlCommand com = new SqlCommand("SELECT Idd FROM Dataset5 WHERE Idd = 10", sqlConnection))
+            using (SqlCommand com = new SqlCommand("SELECT Idd FROM DatasetDB5 WHERE Code='CODE_SENSOR'", sqlConnection))
             {
                 SqlDataReader reader = com.ExecuteReader();
                 if (reader.HasRows)
@@ -1258,4 +1108,5 @@ namespace HistoricalComponent
         }
         #endregion
     }
+    #endregion
 }

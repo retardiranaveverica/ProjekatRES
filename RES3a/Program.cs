@@ -1,4 +1,5 @@
-﻿using DumpingBufferComponent;
+﻿using DumpingBuffer;
+using DumpingBufferComponent;
 using HistoricalComponent;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,13 @@ namespace RES3a
                 Console.WriteLine("2. Slanje direktno na Historical");
 
                 int broj = Int32.Parse(Console.ReadLine());
-        //        database.Create();
+                database.Create();
                 switch (broj)
                 {
 
                     case 1:
                         writerToDumpingBaffer.SetDataToDumpingBuffer();
-                       // data.PackAddData();
-                        database.WriteToDatabase();
+                        data.PackAddData();
                         break;
                     case 2:
                         writerToHistorical.SettingValues();
