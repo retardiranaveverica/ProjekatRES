@@ -13,9 +13,9 @@ namespace HistoricalComponent
     {
         #region connectionString and commands for making tables
         //sneza 
-        //string connectionString = "Data Source=localhost;Initial Catalog=Database;Integrated Security=True";
-        //maja
         string connectionString = "Data Source=localhost;Initial Catalog=HistoricalDatabase;Integrated Security=True";
+        //maja
+       // string connectionString = "Data Source=localhost;Initial Catalog=HistoricalDatabase;Integrated Security=True";
         string command_1 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset1') BEGIN  CREATE TABLE[dbo].[Dataset1] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
         string command_2 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset2') BEGIN  CREATE TABLE[dbo].[Dataset2] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
         string command_3 = "IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Dataset3') BEGIN  CREATE TABLE[dbo].[Dataset3] ( [Idd] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, [Dataset] INT NOT NULL, [Value] INT NOT NULL, [Code] NVARCHAR(MAX) NOT NULL , [TIMESTAMP] datetime NOT NULL); END;";
@@ -610,9 +610,10 @@ namespace HistoricalComponent
                                 sw.WriteLine(item2.Dataset);
                                 dataset5.Add(data);
                             }
+                            datas.Add(data);
+
                         }
 
-                        datas.Add(data);
                     }
                 }
             }

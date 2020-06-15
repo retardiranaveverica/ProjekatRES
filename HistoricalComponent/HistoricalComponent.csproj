@@ -47,6 +47,11 @@
     <Compile Include="DataFromDB.cs" />
     <Compile Include="HistoricalProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="WriterToHistorical.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +67,13 @@
       <Project>{02cc7893-9d8a-4f5e-b4a7-c9aacb627723}</Project>
       <Name>WriterComponent</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

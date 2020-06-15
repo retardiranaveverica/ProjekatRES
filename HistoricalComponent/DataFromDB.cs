@@ -65,21 +65,25 @@ namespace HistoricalComponent
                         description.Id = 9;
                     else if (code == "CODE_SENSOR")
                         description.Id = 10;
+
+                    description.Dataset = item.CollectionDescriptionAdd.Dataset;
+                    dataset = item.CollectionDescriptionAdd.Dataset;
+
+                    if (CheckCodeAndDataset())
+                    {
+                        description.HistoricalProperties.Add(historicalProperty);
+
+                        descriptionList.Descriptions.Add(description);
+                        descriptionLists.Add(descriptionList);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error with code and dataset!");
+                    }
+
                 }
                 
-                description.Dataset = item.CollectionDescriptionAdd.Dataset;
-                dataset = item.CollectionDescriptionAdd.Dataset;
-
-                if (CheckCodeAndDataset())
-                {
-                    description.HistoricalProperties.Add(historicalProperty);
-
-                    descriptionList.Descriptions.Add(description);
-                    descriptionLists.Add(descriptionList);
-                } else
-                {
-                    Console.WriteLine("Error with code and dataset!");
-                }
+               
                 
             }
 
@@ -88,7 +92,7 @@ namespace HistoricalComponent
 
         private void Read()
         {
-           using(StreamWriter writer = new StreamWriter("DumpingBufferValues.txt"))
+           using(StreamWriter writer = new StreamWriter("DumpingBufferValues.txt", true))
                 foreach(var item in descriptionLists)
                 {
                     foreach(var item2 in item.descriptions)
@@ -96,10 +100,10 @@ namespace HistoricalComponent
                         foreach(var item3 in item2.HistoricalProperties)
                         {
                             
-                            Console.WriteLine(item3.Code);
-                            Console.WriteLine(item3.HistoricalValue);
-                            Console.WriteLine(item2.Id);
-                            Console.WriteLine(item2.Dataset);
+                            //Console.WriteLine(item3.Code);
+                            //Console.WriteLine(item3.HistoricalValue);
+                            //Console.WriteLine(item2.Id);
+                            //Console.WriteLine(item2.Dataset);
                             writer.WriteLine("Code: " + item3.Code);
                             writer.WriteLine("Value" + item3.HistoricalValue);
                             writer.WriteLine("Id: " +item2.Id);

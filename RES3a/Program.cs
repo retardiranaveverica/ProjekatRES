@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 ﻿using DumpingBuffer;
-=======
 ﻿using Common;
->>>>>>> 44fcbd61c892efcfc3e7785c298693939754e6a4
 using DumpingBufferComponent;
 using HistoricalComponent;
 using System;
@@ -21,6 +18,7 @@ namespace RES3a
             WriterToDumpingBaffer writerToDumpingBaffer = new WriterToDumpingBaffer();
             Database database = new Database();
             DataFromDB data = new DataFromDB();
+            DatabaseDB databaseDB = new DatabaseDB();
             while (true)
             {
                 Console.WriteLine("Odaberite 1 ili 2");
@@ -28,21 +26,17 @@ namespace RES3a
                 Console.WriteLine("2. Slanje direktno na Historical");
 
                 int broj = Int32.Parse(Console.ReadLine());
-<<<<<<< HEAD
-                database.Create();
-=======
 
->>>>>>> 44fcbd61c892efcfc3e7785c298693939754e6a4
+              //  database.Create();
+
                 switch (broj)
                 {
 
                     case 1:
                         writerToDumpingBaffer.SetDataToDumpingBuffer();
                         data.PackAddData();
-<<<<<<< HEAD
-=======
                         database.WriteToDatabase();
->>>>>>> 44fcbd61c892efcfc3e7785c298693939754e6a4
+                      //  databaseDB.WriteToDatabase();
                         break;
                     case 2:
                         writerToHistorical.SettingValues();

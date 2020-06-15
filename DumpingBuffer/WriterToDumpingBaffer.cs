@@ -28,7 +28,7 @@ namespace DumpingBufferComponent
         int count = 0;
         bool isDatasetExist = false;
         bool isEqualsCode = false;
-        StreamWriter sw = new StreamWriter("WToDB.txt");
+        StreamWriter sw = new StreamWriter("WToDB.txt", true);
 
         public void SetDataToDumpingBuffer()
         {
@@ -128,7 +128,7 @@ namespace DumpingBufferComponent
                 count = 0;
             }
 
-       //     databaseDB.sqlConnection.Close();
+            databaseDB.sqlConnection.Close();
 
         }
 
