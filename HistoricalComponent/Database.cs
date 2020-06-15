@@ -46,7 +46,7 @@ namespace HistoricalComponent
         List<Data> dataset5 = new List<Data>();
         #endregion
 
-        List<Data> listOfData = new List<Data>();
+      //  List<Data> listOfData = new List<Data>();
         private void Connect()
         {
             sqlConnection = new SqlConnection(connectionString);
@@ -192,40 +192,42 @@ namespace HistoricalComponent
                 InsertInTable_1();
 
             }
-            else if(Update_1_1().ima == true)
-            {
-
-                foreach (var item in datas)
-                {
-                    if (item.code == "CODE_ANALOG")
-                    {
-                        if (item.value > Update_1_1().value + Update_1_1().value * 0.02)
-                        {
-                            U1_1();
-                        }
-                        else
-                            break;
-                    }
-                    else
-                        break;
-                }
-
-            }
             else if(Update_1_2().ima == true)
             {
+
                 foreach (var item in datas)
                 {
                     if (item.code == "CODE_DIGITAL")
                     {
-                        if (item.value > Update_1_2().value + Update_1_2().value * 0.02)
-                        {
-                            U1_2();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_1_1().value + Update_1_1().value * 0.02))
+                        //{
+                        //    U1_1();
+                        //}
+                        //else
+                        //    break;
+                        U1_2();
                     }
-                    else
-                        break;
+                    //else
+                    //    break;
+                }
+
+            }
+            else if(Update_1_1().ima == true)
+            {
+                foreach (var item in datas)
+                {
+                    if (item.code == "CODE_ANALOG")
+                    {
+                        //if (item.value > (Update_1_2().value + Update_1_2().value * 0.02))
+                        //{
+                        //    U1_2();
+                        //}
+                        //else
+                        //    break;
+                        U1_1();
+                    }
+                    //else
+                    //    break;
                 }
 
                 
@@ -244,15 +246,18 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_CUSTOM")
                     {
-                        if (item.value > Update_2_1().value + Update_2_1().value * 0.02)
-                        {
-                            U2_2();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_2_1().value + Update_2_1().value * 0.02))
+                        //{
+                        //    U2_2();
+                        //}
+                        //else
+                        //    break;
+                        U2_2();
                     }
-                    else
-                        break;
+                    //else
+                    //    break;
+                    
+                    
                 }
                 
             }
@@ -262,15 +267,16 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_LIMITSET")
                     {
-                        if (item.value > Update_2_2().value + Update_2_2().value * 0.02)
-                        {
-                            U2_1();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_2_2().value + Update_2_2().value * 0.02))
+                        //{
+                        //    U2_1();
+                        //}
+                        //else
+                        //    break;
+                        U2_1();
                     }
-                    else
-                        break;
+                    //else
+                    //    break;
                 }
                 
             }
@@ -289,15 +295,15 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_SINGLENOE")
                     {
-                        if (item.value > Update_3_1().value + Update_3_1().value * 0.02)
-                        {
-                            U3_1();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_3_1().value + Update_3_1().value * 0.02))
+                        //{
+                        //    U3_1();
+                        //}
+                        //else
+                        //    break;
+                        U3_1();
                     }
-                    else
-                        break;
+                    //else break;
                 }
             }
             else if (Update_3_2().ima == true)
@@ -306,18 +312,18 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_MULTIPLENODE")
                     {
-                        if (item.value > Update_3_2().value + Update_3_2().value * 0.02)
-                        {
-                            U3_2();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_3_2().value + Update_3_2().value * 0.02))
+                        //{
+                        //    U3_2();
+                        //}
+                        //else
+                        //    break;
+                        U3_2();
                     }
-                    else
-                        break;
+                    //else break;
                 }
 
-               // U3_2();
+                
             }
         }
         private void WriteToDataset4()
@@ -334,15 +340,16 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_CONSUMER")
                     {
-                        if (item.value > Update_4_1().value + Update_4_1().value * 0.02)
-                        {
-                            U4_1();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_4_1().value + Update_4_1().value * 0.02))
+                        //{
+                        //    U4_1();
+                        //}
+                        //else
+                        //    break;
+                        U4_1();
                     }
-                    else
-                        break;
+                    //else
+                    //    break;
                 }
                 
 
@@ -354,15 +361,16 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_SOURCE")
                     {
-                        if (item.value > Update_4_2().value + Update_4_2().value * 0.02)
-                        {
-                            U4_2();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_4_2().value + Update_4_2().value * 0.02))
+                        //{
+                        //    U4_2();
+                        //}
+                        //else
+                        //    break;
+                        U4_2();
                     }
-                    else
-                        break;
+                    //else break;
+                    
                 }
                 
             }
@@ -382,15 +390,17 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_MOTION")
                     {
-                        if (item.value > Update_5_1().value + Update_5_1().value * 0.02)
-                        {
-                            U5_1();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_5_1().value + Update_5_1().value * 0.02))
+                        //{
+                        //    U5_1();
+                        //}
+                        //else
+                        //    break;
+                        U5_1();
                     }
-                    else
-                        break;
+                    //else
+                    //    break;
+
                 }
 
             }
@@ -401,15 +411,17 @@ namespace HistoricalComponent
                 {
                     if (item.code == "CODE_SENSOR")
                     {
-                        if (item.value > Update_5_2().value + Update_5_2().value * 0.02)
-                        {
-                            U5_2();
-                        }
-                        else
-                            break;
+                        //if (item.value > (Update_5_2().value + Update_5_2().value * 0.02))
+                        //{
+                        //    U5_2();
+                        //}
+                        //else
+                        //    break;
+                        U5_2();
                     }
-                    else
-                        break;
+                    //else
+                    //    break;
+
                 }
             }
         }
@@ -419,9 +431,8 @@ namespace HistoricalComponent
         private void ReplaceData()
         {
             Data data = new Data();
-            using (StreamWriter sw = new StreamWriter("Log.txt"))
+            using (StreamWriter sw = new StreamWriter("Database.txt", true))
             {
-                sw.WriteLine("Database");
 
                 foreach (var item in WriterToHistorical.descriptionLists)
                 {
@@ -437,10 +448,11 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
+
                                 dataset1.Add(data);
                             }
                             else if (item2.Dataset == 2)
@@ -451,10 +463,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset2.Add(data);
                             }
@@ -466,10 +478,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset3.Add(data);
                             }
@@ -481,10 +493,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset4.Add(data);
                             }
@@ -497,10 +509,10 @@ namespace HistoricalComponent
                                 data.dataset = item2.Dataset;
 
                                 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
                                 dataset5.Add(data);
                             }
                         }
@@ -510,12 +522,13 @@ namespace HistoricalComponent
                 }
             }
         }
+
+        
         private void ReplaceDataDB()
         {
             Data data = new Data();
-            using (StreamWriter sw = new StreamWriter("LogDB.txt"))
+            using (StreamWriter sw = new StreamWriter("LogDB.txt", true))
             {
-                sw.WriteLine("Database");
 
                 foreach (var item in DataFromDB.descriptionLists)
                 {
@@ -531,10 +544,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
                                 dataset1.Add(data);
                             }
                             else if (item2.Dataset == 2)
@@ -545,10 +558,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset2.Add(data);
                             }
@@ -560,10 +573,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset3.Add(data);
                             }
@@ -575,10 +588,10 @@ namespace HistoricalComponent
                                 data.id = item2.Id;
                                 data.dataset = item2.Dataset;
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
 
                                 dataset4.Add(data);
                             }
@@ -591,10 +604,10 @@ namespace HistoricalComponent
                                 data.dataset = item2.Dataset;
 
 
-                                sw.WriteLine(item3.Code.ToString());
-                                sw.WriteLine(item3.HistoricalValue.ToString());
-                                sw.WriteLine(item2.Id.ToString());
-                                sw.WriteLine(item2.Dataset.ToString());
+                                sw.WriteLine(item3.Code);
+                                sw.WriteLine(item3.HistoricalValue);
+                                sw.WriteLine(item2.Id);
+                                sw.WriteLine(item2.Dataset);
                                 dataset5.Add(data);
                             }
                         }
